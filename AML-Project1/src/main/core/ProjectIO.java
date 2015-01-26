@@ -115,7 +115,7 @@ public static void getUniqueColumns(String filename)
 		System.out.println("here");
 		}
 }
-public static void getFirstOrderTypeCount(String filename)
+public static void getFirstOrderTypeCount(String[] args)
 {
 	List<HashMap<String,Integer>> fileInfo=new ArrayList<HashMap<String,Integer>>();
 	List<String> filenames=new ArrayList<String>();
@@ -126,7 +126,7 @@ public static void getFirstOrderTypeCount(String filename)
 	}
 	
 	try{
-		BufferedReader br=new BufferedReader(new FileReader(new File(filename)));
+		BufferedReader br=new BufferedReader(new FileReader(new File(args[0])));
 		String s;
 		System.out.println("Begin reading...");
 		int i=0;
@@ -185,7 +185,7 @@ public static void getFirstOrderTypeCount(String filename)
 	{
 		System.out.println("notnh");
 	}
-	String fname="//Users//Yazhe//Documents//UCL-MachineLearning//COMPGI09-AppliedMachineLearning//Projects//Project1-ClickPrediction//Testing";
+	String fname=args[1];
 	try{
 		System.out.println("Begin writing...");
 		for(int i=0;i<23;i++)
@@ -201,7 +201,7 @@ public static void getFirstOrderTypeCount(String filename)
 		}
 	System.out.println("task finished");
 }
-public static void getSecondOrderTypeCount(String filename)
+public static void getSecondOrderTypeCount(String[] args)
 {
 	List<HashMap<String,Integer>> fileInfo=new ArrayList<HashMap<String,Integer>>();
 	List<String> filenames=new ArrayList<String>();
@@ -215,7 +215,7 @@ public static void getSecondOrderTypeCount(String filename)
 	}
 	
 	try{
-		BufferedReader br=new BufferedReader(new FileReader(new File(filename)));
+		BufferedReader br=new BufferedReader(new FileReader(new File(args[0])));
 		String s;
 		System.out.println("Begin reading...");
 		int i=0;
@@ -268,7 +268,7 @@ public static void getSecondOrderTypeCount(String filename)
 	{
 		System.out.println("notnh");
 	}
-	String fname="//Users//Yazhe//Documents//UCL-MachineLearning//COMPGI09-AppliedMachineLearning//Projects//Project1-ClickPrediction//Testing";
+	String fname=args[1];
 	try{
 		System.out.println("Begin writing...");
 		int n=fileInfo.size();
@@ -290,7 +290,7 @@ public static void getSecondOrderTypeCount(String filename)
 }
 public static void main(String[] args)
 {
-	//getFirstOrderTypeCount(args[0]);
-	getSecondOrderTypeCount(args[0]);
+	getFirstOrderTypeCount(args);
+	getSecondOrderTypeCount(args);
 }
 }
