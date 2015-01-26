@@ -131,7 +131,7 @@ public static void getFirstOrderTypeCount(String filename)
 		System.out.println("Begin reading...");
 		int i=0;
 		s=br.readLine();
-		String[] names=Arrays.copyOfRange(s.split(","), 3, 23) ;
+		String[] names=Arrays.copyOfRange(s.split(","), 3, 24) ;
 		filenames.add("day");
 		filenames.add("hour");
 		for(int j=0;j<20;j++)
@@ -141,7 +141,7 @@ public static void getFirstOrderTypeCount(String filename)
 		
 		while((s=br.readLine())!=null)
 		{
-			String[] dataItem=Arrays.copyOfRange(s.split(","), 2, 23) ;
+			String[] dataItem=Arrays.copyOfRange(s.split(","), 2, 24) ;
 			for(int j=0;j<21;j++)
 			{
 				String item=dataItem[j];
@@ -195,7 +195,94 @@ public static void getFirstOrderTypeCount(String filename)
 			pw.close();
 		}
 	}
-	catch(Exception e)
+	catch(IOException e)
+	{
+		System.out.println("here");
+		}
+	System.out.println("task finished");
+}
+public static void getSecondOrderTypeCount(String filename)
+{
+	List<HashMap<String,Integer>> fileInfo=new ArrayList<HashMap<String,Integer>>();
+	List<String> filenames=new ArrayList<String>();
+	for(int i=0;i<23;i++)
+	{
+		for(int j=i+1;j<23;j++)
+		{
+			HashMap<String,Integer> hm=new HashMap<String,Integer>();
+			fileInfo.add(hm);
+		}
+	}
+	
+	try{
+		BufferedReader br=new BufferedReader(new FileReader(new File(filename)));
+		String s;
+		System.out.println("Begin reading...");
+		int i=0;
+		s=br.readLine();
+		String[] names=Arrays.copyOfRange(s.split(","), 1, 24) ;
+		names[0]="day";
+		names[1]="hour";
+		for(int j=0;j<23;j++)
+		{
+			for(int k=j+1;k<23;k++)
+			{
+				filenames.add(names[j]+"&"+names[k]);
+			}
+		}
+		
+		while((s=br.readLine())!=null)
+		{
+			String[] dataItem=Arrays.copyOfRange(s.split(","), 1, 24) ;
+			DateTime t=DateTimeUtil.parseStringToDateTime(dataItem[1]);
+			String d=String.valueOf(t.getDayOfWeek());
+			dataItem[0]=d;
+			String h=String.valueOf(t.getHourOfDay());
+			dataItem[1]=h;
+			int count=0;
+			for(int j=0;j<23;j++)
+			{
+				String item1=dataItem[j];
+					for(int k=j+1;k<23;k++)
+					{
+						String item2=dataItem[k];
+						int c=0;
+						HashMap<String, Integer> st=fileInfo.get(count);
+						String key=item1+"+"+item2;
+						if(st.containsKey(key))
+							c=st.get(key);
+						c+=1;
+						fileInfo.get(j+1).put(key, c);
+						count+=1;
+					}
+			}
+			if(i%1000000==0)
+			{
+				System.out.println(i+" items finished.");
+			}
+			i++;
+		}
+		br.close();
+	}
+	catch(IOException e)
+	{
+		System.out.println("notnh");
+	}
+	String fname="//Users//Yazhe//Documents//UCL-MachineLearning//COMPGI09-AppliedMachineLearning//Projects//Project1-ClickPrediction//Testing";
+	try{
+		System.out.println("Begin writing...");
+		int n=fileInfo.size();
+		for(int i=0;i<n;i++)
+		{
+			if(fileInfo.get(i).size()!=0)
+			{
+				PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter(fname+"//"+filenames.get(i)+".csv")));
+				pw.print(StringUtils.join(fileInfo.get(i).entrySet(),"\n"));
+				pw.close();
+			}
+		}
+	}
+	catch(IOException e)
 	{
 		System.out.println("here");
 		}
@@ -203,6 +290,7 @@ public static void getFirstOrderTypeCount(String filename)
 }
 public static void main(String[] args)
 {
-	getFirstOrderTypeCount(args[0]);
+	//getFirstOrderTypeCount(args[0]);
+	getSecondOrderTypeCount(args[0]);
 }
 }
